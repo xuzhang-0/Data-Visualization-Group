@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>合作机构排名</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<link rel="stylesheet" href="common.css">
+<style>
+.main{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1400px;width:95%;margin:20px auto}
+.panel{background:#fff;border:1px solid var(--c-border-lt);border-radius:16px;padding:24px 20px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);min-height:480px}
+.panel-head{display:flex;align-items:baseline;gap:8px;margin-bottom:4px}
+.panel h3{font-size:16px;font-weight:700;margin:0}
+.panel .sub{font-size:11px;color:#999;margin-bottom:16px}
+.chart{width:100%}
+.c-blue{color:var(--c-primary)}.c-purple{color:#3949ab}
+.rank-change{display:inline-block;font-size:10px;margin-left:4px}
+.rank-change.up{color:#2e7d32}
+.rank-change.down{color:#c62828}
+.rank-change.same{color:#999}
+.chart-row{display:flex;align-items:center;gap:8px;padding:2px 0}
+.chart-rank{flex:0 0 20px;text-align:center}
+.chart-name{flex:0 0 150px;font-size:11px;color:#333;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chart-bar-wrap{flex:1;height:22px;position:relative;display:flex;align-items:stretch}
+.chart-bar-bg{position:absolute;inset:0;background:#f5f5f5;border-radius:4px}
+.chart-bar-fill{position:absolute;top:0;height:100%;border-radius:4px;opacity:0.85;transition:width 0.7s}
+.chart-bar-fill.positive{left:50%;background:#69f0ae}
+.chart-bar-fill.negative{right:50%;background:#ff6e40}
+.chart-bar-center{position:absolute;left:50%;top:0;width:1px;height:100%;background:#e0e0e0;transform:translateX(-0.5px)}
+.chart-val{flex:0 0 65px;font-size:11px;color:#555;text-align:right;font-weight:500}
+.chart-val.positive{color:#2e7d32}
+.chart-val.negative{color:#c62828}
+.tooltip-inner{padding:10px 14px}
+.tooltip-inner b{color:var(--c-blue);font-size:13px}
+.tooltip-inner .detail{font-size:11px;color:#ddd;line-height:1.7}
+//.stats-summary{display:flex;justify-content:center;gap:32px;padding:14px 20px;background:#fff;border-bottom:1px solid var(--c-border-ft)}
+//.stats-summary .item{text-align:center}
+//.stats-summary .num{font-size:20px;font-weight:800;color:var(--c-primary)}
+//.stats-summary .label{font-size:11px;color:#999;margin-top:2px}
+@media(max-width:960px){.main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="header"><h1>合作机构排名对比</h1><p>基于完整明细数据 | 中国 Top 15 vs 中东欧 Top 15 | 含 125/135 分期排名</p></div>
+<div class="stats-summary" id="statsSummary"></div>
+<div class="controls">
+  <button class="mode-btn active" data-mode="total">总体 (125+135)</button>
+  <div class="sep"></div>
+  <button class="mode-btn" data-mode="125">125 期间</button>
+  <button class="mode-btn" data-mode="135">135 期间</button>
+  <button class="mode-btn delta" data-mode="delta">变化 (125→135)</button>
+</div>
+<div class="main">
+  <div class="panel" id="panelCN">
+    <div class="panel-head"><h3 class="c-blue">中国机构 Top 15</h3></div>
+    <div class="sub" id="subCN">按 125+135 总发文量排序</div>
+    <div class="chart" id="chartCN"></div>
+  </div>
+  <div class="panel" id="panelCEE">
+    <div class="panel-head"><h3 class="c-purple">中东欧机构 Top 15</h3></div>
+    <div class="sub" id="subCEE">按 125+135 总发文量排序 · 含国别</div>
+    <div class="chart" id="chartCEE"></div>
+  </div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+<script>
+const CN = [{"name": "清华大学", "name_en": "", "p125": 652, "p135": 1685, "rank_total": 3, "rank_125": 4, "rank_135": 1, "rank_change": 3, "delta": 1033}, {"name": "北京大学", "name_en": "", "p125": 908, "p135": 1535, "rank_total": 1, "rank_125": 2, "rank_135": 2, "rank_change": 0, "delta": 627}, {"name": "中国科学院高能物理研究所", "name_en": "", "p125": 1022, "p135": 1382, "rank_total": 2, "rank_125": 1, "rank_135": 3, "rank_change": -2, "delta": 360}, {"name": "中国科学院大学", "name_en": "", "p125": 156, "p135": 1318, "rank_total": 7, "rank_125": 12, "rank_135": 4, "rank_change": 8, "delta": 1162}, {"name": "中国科学技术大学", "name_en": "", "p125": 900, "p135": 1099, "rank_total": 4, "rank_125": 3, "rank_135": 5, "rank_change": -2, "delta": 199}, {"name": "上海交通大学", "name_en": "", "p125": 488, "p135": 1054, "rank_total": 6, "rank_125": 8, "rank_135": 6, "rank_change": 2, "delta": 566}, {"name": "中山大学", "name_en": "", "p125": 596, "p135": 989, "rank_total": 5, "rank_125": 6, "rank_135": 7, "rank_change": -1, "delta": 393}, {"name": "北京航空航天大学", "name_en": "", "p125": 140, "p135": 833, "rank_total": 10, "rank_125": 13, "rank_135": 8, "rank_change": 5, "delta": 693}, {"name": "山东大学", "name_en": "", "p125": 616, "p135": 829, "rank_total": 8, "rank_125": 5, "rank_135": 9, "rank_change": -4, "delta": 213}, {"name": "南京大学", "name_en": "", "p125": 546, "p135": 803, "rank_total": 9, "rank_125": 7, "rank_135": 10, "rank_change": -3, "delta": 257}, {"name": "华中师范大学", "name_en": "", "p125": 301, "p135": 642, "rank_total": 11, "rank_125": 9, "rank_135": 11, "rank_change": -2, "delta": 341}, {"name": "复旦大学", "name_en": "", "p125": 183, "p135": 528, "rank_total": 12, "rank_125": 10, "rank_135": 12, "rank_change": -2, "delta": 345}, {"name": "电子科技大学", "name_en": "", "p125": 92, "p135": 528, "rank_total": 13, "rank_125": 21, "rank_135": 13, "rank_change": 8, "delta": 436}, {"name": "武汉大学", "name_en": "", "p125": 62, "p135": 436, "rank_total": 15, "rank_125": 35, "rank_135": 14, "rank_change": 21, "delta": 374}, {"name": "浙江大学", "name_en": "", "p125": 156, "p135": 423, "rank_total": 14, "rank_125": 11, "rank_135": 15, "rank_change": -4, "delta": 267}, {"name": "中国原子能科学研究院", "name_en": "", "p125": 134, "p135": 332, "rank_total": 16, "rank_125": 15, "rank_135": 16, "rank_change": -1, "delta": 198}, {"name": "西安交通大学", "name_en": "", "p125": 95, "p135": 318, "rank_total": 17, "rank_125": 20, "rank_135": 17, "rank_change": 3, "delta": 223}, {"name": "华中科技大学", "name_en": "", "p125": 90, "p135": 297, "rank_total": 18, "rank_125": 23, "rank_135": 18, "rank_change": 5, "delta": 207}, {"name": "首都医科大学", "name_en": "", "p125": 54, "p135": 261, "rank_total": 19, "rank_125": 38, "rank_135": 19, "rank_change": 19, "delta": 207}, {"name": "中国科学院国家天文台", "name_en": "", "p125": 53, "p135": 249, "rank_total": 20, "rank_125": 39, "rank_135": 20, "rank_change": 19, "delta": 196}];
+const CEE = [{"name": "匈牙利维格纳物理研究中心", "name_en": "", "country": "匈牙利", "p125": 1162, "p135": 1974, "rank_total": 2, "rank_125": 2, "rank_135": 1, "rank_change": 1, "delta": 812}, {"name": "查理大学", "name_en": "", "country": "捷克", "p125": 1397, "p135": 1934, "rank_total": 1, "rank_125": 1, "rank_135": 2, "rank_change": -1, "delta": 537}, {"name": "雅典大学", "name_en": "", "country": "希腊", "p125": 1121, "p135": 1697, "rank_total": 3, "rank_125": 3, "rank_135": 3, "rank_change": 0, "delta": 576}, {"name": "贝尔格莱德大学", "name_en": "", "country": "塞尔维亚", "p125": 1111, "p135": 1566, "rank_total": 4, "rank_125": 4, "rank_135": 4, "rank_change": 0, "delta": 455}, {"name": "霍里亚·胡鲁比国家物理和核工程研究所", "name_en": "", "country": "罗马尼亚", "p125": 952, "p135": 1536, "rank_total": 6, "rank_125": 6, "rank_135": 5, "rank_change": 1, "delta": 584}, {"name": "雅典国家技术大学", "name_en": "", "country": "希腊", "p125": 584, "p135": 1499, "rank_total": 7, "rank_125": 16, "rank_135": 6, "rank_change": 10, "delta": 915}, {"name": "波兰科学院核物理研究所", "name_en": "", "country": "波兰", "p125": 1044, "p135": 1485, "rank_total": 5, "rank_125": 5, "rank_135": 7, "rank_change": -2, "delta": 441}, {"name": "波兰国家核研究中心", "name_en": "", "country": "波兰", "p125": 568, "p135": 1386, "rank_total": 9, "rank_125": 18, "rank_135": 8, "rank_change": 10, "delta": 818}, {"name": "布拉迪斯拉发夸美纽斯大学", "name_en": "", "country": "斯洛伐克", "p125": 687, "p135": 1280, "rank_total": 8, "rank_125": 12, "rank_135": 9, "rank_change": 3, "delta": 593}, {"name": "华沙工业大学", "name_en": "", "country": "波兰", "p125": 242, "p135": 1272, "rank_total": 20, "rank_125": 34, "rank_135": 10, "rank_change": 24, "delta": 1030}, {"name": "斯洛文尼亚约瑟夫·斯蒂芬研究所", "name_en": "", "country": "斯洛文尼亚", "p125": 737, "p135": 1170, "rank_total": 12, "rank_125": 10, "rank_135": 11, "rank_change": -1, "delta": 433}, {"name": "克拉科夫AGH科技大学", "name_en": "", "country": "波兰", "p125": 694, "p135": 1140, "rank_total": 13, "rank_125": 11, "rank_135": 12, "rank_change": -1, "delta": 446}, {"name": "德谟克利特国家科学研究中心", "name_en": "", "country": "希腊", "p125": 818, "p135": 1114, "rank_total": 10, "rank_125": 9, "rank_135": 13, "rank_change": -4, "delta": 296}, {"name": "捷克理工大学", "name_en": "", "country": "捷克", "p125": 275, "p135": 1105, "rank_total": 22, "rank_125": 30, "rank_135": 14, "rank_change": 16, "delta": 830}, {"name": "罗兰大学", "name_en": "", "country": "匈牙利", "p125": 857, "p135": 1054, "rank_total": 11, "rank_125": 7, "rank_135": 15, "rank_change": -8, "delta": 197}, {"name": "华沙大学", "name_en": "", "country": "波兰", "p125": 528, "p135": 1030, "rank_total": 17, "rank_125": 22, "rank_135": 16, "rank_change": 6, "delta": 502}, {"name": "雅盖隆大学", "name_en": "", "country": "波兰", "p125": 585, "p135": 1025, "rank_total": 16, "rank_125": 15, "rank_135": 17, "rank_change": -2, "delta": 440}, {"name": "卢布尔雅那大学", "name_en": "", "country": "斯洛文尼亚", "p125": 571, "p135": 985, "rank_total": 18, "rank_125": 17, "rank_135": 18, "rank_change": -1, "delta": 414}, {"name": "捷克科学院物理研究所", "name_en": "", "country": "捷克", "p125": 669, "p135": 971, "rank_total": 15, "rank_125": 13, "rank_135": 19, "rank_change": -6, "delta": 302}, {"name": "萨洛尼卡大学", "name_en": "", "country": "希腊", "p125": 832, "p135": 967, "rank_total": 14, "rank_125": 8, "rank_135": 20, "rank_change": -12, "delta": 135}, {"name": "斯普利特大学", "name_en": "", "country": "克罗地亚", "p125": 619, "p135": 907, "rank_total": 19, "rank_125": 14, "rank_135": 21, "rank_change": -7, "delta": 288}, {"name": "德布勒森大学", "name_en": "", "country": "匈牙利", "p125": 551, "p135": 888, "rank_total": 21, "rank_125": 20, "rank_135": 22, "rank_change": -2, "delta": 337}, {"name": "约阿尼纳大学", "name_en": "", "country": "希腊", "p125": 547, "p135": 797, "rank_total": 23, "rank_125": 21, "rank_135": 23, "rank_change": -2, "delta": 250}, {"name": "萨格勒布大学", "name_en": "", "country": "克罗地亚", "p125": 473, "p135": 774, "rank_total": 25, "rank_125": 24, "rank_135": 24, "rank_change": 0, "delta": 301}, {"name": "维尔纽斯大学", "name_en": "", "country": "立陶宛", "p125": 274, "p135": 742, "rank_total": 29, "rank_125": 31, "rank_135": 25, "rank_change": 6, "delta": 468}, {"name": "国家激光、等离子体和辐射物理研究所", "name_en": "", "country": "罗马尼亚", "p125": 207, "p135": 737, "rank_total": 30, "rank_125": 37, "rank_135": 26, "rank_change": 11, "delta": 530}, {"name": "鲁杰尔·博什科维奇研究所", "name_en": "", "country": "克罗地亚", "p125": 560, "p135": 731, "rank_total": 24, "rank_125": 19, "rank_135": 27, "rank_change": -8, "delta": 171}, {"name": "匈牙利科学院核研究所", "name_en": "", "country": "匈牙利", "p125": 473, "p135": 715, "rank_total": 27, "rank_125": 25, "rank_135": 28, "rank_change": -3, "delta": 242}, {"name": "帕拉茨基大学", "name_en": "", "country": "捷克", "p125": 517, "p135": 692, "rank_total": 26, "rank_125": 23, "rank_135": 29, "rank_change": -6, "delta": 175}, {"name": "索非亚技术大学", "name_en": "", "country": "保加利亚", "p125": 461, "p135": 671, "rank_total": 28, "rank_125": 27, "rank_135": 30, "rank_change": -3, "delta": 210}];
+let currentMode = "total";
+
+function getVal(d){
+  if(currentMode==="125") return d.p125;
+  if(currentMode==="135") return d.p135;
+  if(currentMode==="delta") return d.delta;
+  return d.p125+d.p135;
+}
+function getRank(d){
+  if(currentMode==="125") return d.rank_125;
+  if(currentMode==="135") return d.rank_135;
+  return d.rank_total;
+}
+function getRankLabel(d){
+  var rc=d.rank_change;
+  if(rc>0) return {cls:"up",txt:"↑"+rc};
+  if(rc<0) return {cls:"down",txt:"↓"+Math.abs(rc)};
+  return {cls:"same",txt:"−"};
+}
+
+// d3.select("#statsSummary").html(
+//   '<div class="item"><div class="num">'+CN.length+'</div><div class="label">中国机构(全量)</div></div>'+
+//   '<div class="item"><div class="num">'+CEE.length+'</div><div class="label">中东欧机构(全量)</div></div>'+
+//   '<div class="item"><div class="num">'+d3.sum(CN,d=>d.p125+d.p135).toLocaleString()+'</div><div class="label">中国总论文</div></div>'+
+//   '<div class="item"><div class="num">'+d3.sum(CEE,d=>d.p125+d.p135).toLocaleString()+'</div><div class="label">中东欧总论文</div></div>'
+// );
+
+function drawPanel(containerId, data, accentColor, showCountry){
+  var c=d3.select("#"+containerId);
+  var isDelta=currentMode==="delta";
+  var sorted=[...data].sort((a,b)=>getVal(b)-getVal(a));
+  var vals=sorted.map(d=>getVal(d));
+  var maxV=isDelta?d3.max(vals.map(Math.abs))||1:d3.max(vals)||1;
+
+  c.selectAll(".chart-row").data(sorted).join(
+    enter=>{
+      var row=enter.append("div").attr("class","chart-row").style("opacity",0);
+      row.transition().duration(400).delay((d,i)=>i*40).style("opacity",1);
+
+      var rk=row.append("span").attr("class","chart-rank");
+      if(isDelta){
+        rk.append("span").attr("class",function(){return ""}).style("display","none");
+      }else{
+        rk.append("span").attr("class",d=>"rank-badge"+(getRank(d)<=3?" top"+getRank(d) :"")).text((d,i)=>i+1);
+      }
+
+      var nm=row.append("span").attr("class","chart-name")
+        .text(d=>{var n=d.name.length>12?d.name.slice(0,11)+"..":d.name;if(showCountry&&d.country)n+=" ("+d.country+")";return n;});
+      if(isDelta){
+        var rcSpan=nm.append("span").attr("class",d=>"rank-change "+getRankLabel(d).cls).style("margin-left","3px");
+        rcSpan.text(d=>getRankLabel(d).txt);
+      }
+
+      var bw=row.append("span").attr("class","chart-bar-wrap");
+      bw.append("span").attr("class","chart-bar-bg");
+      if(isDelta){
+        bw.append("span").attr("class","chart-bar-center");
+        var barPct=d=>(Math.abs(getVal(d))/maxV*50)+"%";
+        var positiveFill=bw.filter(d=>getVal(d)>=0).append("span").attr("class","chart-bar-fill positive").style("width","0%");
+        var negativeFill=bw.filter(d=>getVal(d)<0).append("span").attr("class","chart-bar-fill negative").style("width","0%");
+        setTimeout(function(){
+          positiveFill.style("width",barPct);
+          negativeFill.style("width",barPct);
+        },50);
+      }else{
+        bw.append("span").attr("class","chart-bar-fill").style("background",accentColor).style("left","0").style("width",d=>(getVal(d)/maxV*100)+"%");
+      }
+
+      var valText=isDelta?(d=>(getVal(d)>=0?"+"+getVal(d):getVal(d)).toLocaleString()+" 篇"):(d=>getVal(d).toLocaleString()+" 篇");
+      row.append("span").attr("class",d=>"chart-val"+(isDelta?(getVal(d)>=0?" positive":" negative"):"")).text(valText);
+
+      row.on("mouseenter",function(e,d){
+        d3.select(this).select(".chart-bar-fill").style("opacity",1);
+        var html='<div class="tooltip-inner"><b>'+d.name+'</b>'+(d.name_en?'<br><span style="color:#aaa;font-size:10px">'+d.name_en+'</span>':'');
+        if(showCountry&&d.country) html+='<br><span style="color:#aaa;font-size:10px">'+d.country+'</span>';
+        html+='<div class="detail">'+
+          '125: '+d.p125.toLocaleString()+' 篇 (第'+d.rank_125+')<br>'+
+          '135: '+d.p135.toLocaleString()+' 篇 (第'+d.rank_135+')<br>'+
+          '合计: '+(d.p125+d.p135).toLocaleString()+' 篇<br>'+
+          '变化: '+(d.delta>=0?'+':'')+d.delta+' 篇<br>'+
+          '排名: '+getRankLabel(d).txt;
+        d3.select("#tooltip").html(html).style("opacity",1);
+      })
+      .on("mousemove",function(e){d3.select("#tooltip").style("left",(e.pageX+14)+"px").style("top",(e.pageY-10)+"px")})
+      .on("mouseleave",function(){
+        d3.select(this).select(".chart-bar-fill").style("opacity",0.85);
+        d3.select("#tooltip").style("opacity",0);
+      });
+    }
+  );
+}
+
+function renderAll(){
+  var modeLabels={"total":"125+135","125":"125","135":"135","delta":"变化量 (125→135)"};
+  var isDelta=currentMode==="delta";
+
+  // 按当前模式动态选取 Top 15
+  var cnTop15=[...CN].sort((a,b)=>getVal(b)-getVal(a)).slice(0,15);
+  var ceeTop15=[...CEE].sort((a,b)=>getVal(b)-getVal(a)).slice(0,15);
+
+  d3.select("#subCN").text((isDelta?"按变化量排序 | ":"按 "+modeLabels[currentMode]+" 排序 | ")+"Top 15 · 候选池 "+CN.length+" 个");
+  d3.select("#subCEE").text((isDelta?"按变化量排序 | ":"按 "+modeLabels[currentMode]+" 排序 | ")+"含国别 | Top 15 · 候选池 "+CEE.length+" 个");
+  var cnColor=isDelta?"#69f0ae":"#4fc3f7";
+  var ceeColor=isDelta?"#69f0ae":"#7c4dff";
+  drawPanel("chartCN", cnTop15, cnColor, false);
+  drawPanel("chartCEE", ceeTop15, ceeColor, true);
+}
+
+d3.selectAll(".mode-btn").on("click",function(){
+  currentMode=this.dataset.mode;
+  d3.selectAll(".mode-btn").classed("active",function(){return this.dataset.mode===currentMode});
+  d3.selectAll(".mode-btn.delta").classed("active",currentMode==="delta");
+  d3.select("#chartCN").selectAll("*").remove();
+  d3.select("#chartCEE").selectAll("*").remove();
+  renderAll();
+});
+
+renderAll();
+</script>
+</body>
+</html>

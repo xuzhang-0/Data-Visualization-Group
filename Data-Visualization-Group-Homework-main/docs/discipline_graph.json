@@ -1,0 +1,1198 @@
+{
+  "nodes": [
+    {
+      "id": "世界史",
+      "category": "人文社科类"
+    },
+    {
+      "id": "中医学",
+      "category": "医学类"
+    },
+    {
+      "id": "中药学",
+      "category": "医学类"
+    },
+    {
+      "id": "临床医学",
+      "category": "医学类"
+    },
+    {
+      "id": "交通运输工程",
+      "category": "工学类"
+    },
+    {
+      "id": "仪器科学与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "体育学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "作物学",
+      "category": "农学类"
+    },
+    {
+      "id": "信息与通信工程",
+      "category": "工学类"
+    },
+    {
+      "id": "光学工程",
+      "category": "工学类"
+    },
+    {
+      "id": "公共卫生与预防医学",
+      "category": "医学类"
+    },
+    {
+      "id": "公共管理",
+      "category": "人文社科类"
+    },
+    {
+      "id": "兵器科学与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "兽医学",
+      "category": "农学类"
+    },
+    {
+      "id": "农业工程",
+      "category": "农学类"
+    },
+    {
+      "id": "农业资源与环境",
+      "category": "农学类"
+    },
+    {
+      "id": "农林经济管理",
+      "category": "人文社科类"
+    },
+    {
+      "id": "冶金工程",
+      "category": "工学类"
+    },
+    {
+      "id": "力学",
+      "category": "理学类"
+    },
+    {
+      "id": "动力工程及工程热物理",
+      "category": "工学类"
+    },
+    {
+      "id": "化学",
+      "category": "理学类"
+    },
+    {
+      "id": "化学工程与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "医学技术",
+      "category": "医学类"
+    },
+    {
+      "id": "口腔医学",
+      "category": "医学类"
+    },
+    {
+      "id": "哲学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "园艺学",
+      "category": "农学类"
+    },
+    {
+      "id": "图书情报与档案管理",
+      "category": "人文社科类"
+    },
+    {
+      "id": "土木工程",
+      "category": "工学类"
+    },
+    {
+      "id": "地球物理学",
+      "category": "理学类"
+    },
+    {
+      "id": "地理学",
+      "category": "理学类"
+    },
+    {
+      "id": "地质学",
+      "category": "理学类"
+    },
+    {
+      "id": "地质资源与地质工程",
+      "category": "工学类"
+    },
+    {
+      "id": "城乡规划学",
+      "category": "工学类"
+    },
+    {
+      "id": "基础医学",
+      "category": "医学类"
+    },
+    {
+      "id": "大气科学",
+      "category": "理学类"
+    },
+    {
+      "id": "天文学",
+      "category": "理学类"
+    },
+    {
+      "id": "安全科学与工程",
+      "category": "工学类"
+    },
+    {
+      "id": "工商管理",
+      "category": "人文社科类"
+    },
+    {
+      "id": "应用经济学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "建筑学",
+      "category": "工学类"
+    },
+    {
+      "id": "心理学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "戏剧与影视学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "护理学",
+      "category": "医学类"
+    },
+    {
+      "id": "控制科学与工程",
+      "category": "工学类"
+    },
+    {
+      "id": "政治学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "教育学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "数学",
+      "category": "理学类"
+    },
+    {
+      "id": "新闻传播学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "机械工程",
+      "category": "工学类"
+    },
+    {
+      "id": "材料科学与工程",
+      "category": "工学类"
+    },
+    {
+      "id": "林业工程",
+      "category": "农学类"
+    },
+    {
+      "id": "林学",
+      "category": "农学类"
+    },
+    {
+      "id": "核科学与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "植物保护",
+      "category": "农学类"
+    },
+    {
+      "id": "民族学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "水产",
+      "category": "农学类"
+    },
+    {
+      "id": "水利工程",
+      "category": "工学类"
+    },
+    {
+      "id": "法学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "测绘科学与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "海洋科学",
+      "category": "理学类"
+    },
+    {
+      "id": "物理学",
+      "category": "理学类"
+    },
+    {
+      "id": "特种医学",
+      "category": "医学类"
+    },
+    {
+      "id": "环境科学与工程",
+      "category": "工学类"
+    },
+    {
+      "id": "理论经济学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "生态学",
+      "category": "理学类"
+    },
+    {
+      "id": "生物医学工程",
+      "category": "工学类"
+    },
+    {
+      "id": "生物学",
+      "category": "理学类"
+    },
+    {
+      "id": "生物工程",
+      "category": "工学类"
+    },
+    {
+      "id": "电子科学与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "电气工程",
+      "category": "工学类"
+    },
+    {
+      "id": "畜牧学",
+      "category": "农学类"
+    },
+    {
+      "id": "石油与天然气工程",
+      "category": "工学类"
+    },
+    {
+      "id": "矿业工程",
+      "category": "工学类"
+    },
+    {
+      "id": "社会学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "科学技术史",
+      "category": "人文社科类"
+    },
+    {
+      "id": "管理科学与工程",
+      "category": "人文社科类"
+    },
+    {
+      "id": "系统科学",
+      "category": "理学类"
+    },
+    {
+      "id": "纺织科学与工程",
+      "category": "工学类"
+    },
+    {
+      "id": "统计学",
+      "category": "理学类"
+    },
+    {
+      "id": "网络空间安全",
+      "category": "工学类"
+    },
+    {
+      "id": "考古学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "航空宇航科学与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "船舶与海洋工程",
+      "category": "工学类"
+    },
+    {
+      "id": "艺术学理论",
+      "category": "人文社科类"
+    },
+    {
+      "id": "草学",
+      "category": "农学类"
+    },
+    {
+      "id": "药学",
+      "category": "医学类"
+    },
+    {
+      "id": "计算机科学与技术",
+      "category": "工学类"
+    },
+    {
+      "id": "设计学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "软件工程",
+      "category": "工学类"
+    },
+    {
+      "id": "轻工技术与工程",
+      "category": "工学类"
+    },
+    {
+      "id": "音乐与舞蹈学",
+      "category": "人文社科类"
+    },
+    {
+      "id": "风景园林学",
+      "category": "工学类"
+    },
+    {
+      "id": "食品科学与工程",
+      "category": "工学类"
+    }
+  ],
+  "edges": [
+    {
+      "source": "中医学",
+      "target": "中药学",
+      "relation": "中医与中药"
+    },
+    {
+      "source": "临床医学",
+      "target": "基础医学",
+      "relation": "医学基础与临床"
+    },
+    {
+      "source": "临床医学",
+      "target": "药学",
+      "relation": "临床用药"
+    },
+    {
+      "source": "临床医学",
+      "target": "护理学",
+      "relation": "医护协作"
+    },
+    {
+      "source": "基础医学",
+      "target": "生物学",
+      "relation": "生命科学基础"
+    },
+    {
+      "source": "基础医学",
+      "target": "药学",
+      "relation": "药理学基础"
+    },
+    {
+      "source": "公共卫生与预防医学",
+      "target": "临床医学",
+      "relation": "预防与临床"
+    },
+    {
+      "source": "公共卫生与预防医学",
+      "target": "统计学",
+      "relation": "流行病统计"
+    },
+    {
+      "source": "口腔医学",
+      "target": "临床医学",
+      "relation": "医学分支"
+    },
+    {
+      "source": "医学技术",
+      "target": "临床医学",
+      "relation": "诊断技术"
+    },
+    {
+      "source": "特种医学",
+      "target": "临床医学",
+      "relation": "特殊环境医学"
+    },
+    {
+      "source": "药学",
+      "target": "化学",
+      "relation": "药物化学"
+    },
+    {
+      "source": "中药学",
+      "target": "化学",
+      "relation": "中药化学"
+    },
+    {
+      "source": "生物医学工程",
+      "target": "临床医学",
+      "relation": "医疗设备"
+    },
+    {
+      "source": "生物医学工程",
+      "target": "生物学",
+      "relation": "生物材料"
+    },
+    {
+      "source": "生物医学工程",
+      "target": "电子科学与技术",
+      "relation": "电子医疗"
+    },
+    {
+      "source": "生物学",
+      "target": "生态学",
+      "relation": "生物与环境"
+    },
+    {
+      "source": "生物学",
+      "target": "化学",
+      "relation": "生物化学"
+    },
+    {
+      "source": "生物学",
+      "target": "生物工程",
+      "relation": "生物技术"
+    },
+    {
+      "source": "生物工程",
+      "target": "化学工程与技术",
+      "relation": "生物化工"
+    },
+    {
+      "source": "生物工程",
+      "target": "食品科学与工程",
+      "relation": "食品生物"
+    },
+    {
+      "source": "作物学",
+      "target": "植物保护",
+      "relation": "作物保护"
+    },
+    {
+      "source": "作物学",
+      "target": "园艺学",
+      "relation": "植物种植"
+    },
+    {
+      "source": "作物学",
+      "target": "农业资源与环境",
+      "relation": "土壤与作物"
+    },
+    {
+      "source": "园艺学",
+      "target": "风景园林学",
+      "relation": "园林植物"
+    },
+    {
+      "source": "林学",
+      "target": "林业工程",
+      "relation": "森林利用"
+    },
+    {
+      "source": "林学",
+      "target": "生态学",
+      "relation": "森林生态"
+    },
+    {
+      "source": "畜牧学",
+      "target": "兽医学",
+      "relation": "动物健康"
+    },
+    {
+      "source": "畜牧学",
+      "target": "草学",
+      "relation": "饲料与草"
+    },
+    {
+      "source": "水产",
+      "target": "生物学",
+      "relation": "水生生物"
+    },
+    {
+      "source": "农业工程",
+      "target": "机械工程",
+      "relation": "农业机械"
+    },
+    {
+      "source": "农业工程",
+      "target": "水利工程",
+      "relation": "农田水利"
+    },
+    {
+      "source": "食品科学与工程",
+      "target": "化学",
+      "relation": "食品化学"
+    },
+    {
+      "source": "食品科学与工程",
+      "target": "生物学",
+      "relation": "食品微生物"
+    },
+    {
+      "source": "数学",
+      "target": "统计学",
+      "relation": "数理统计"
+    },
+    {
+      "source": "数学",
+      "target": "物理学",
+      "relation": "数学物理"
+    },
+    {
+      "source": "数学",
+      "target": "系统科学",
+      "relation": "系统建模"
+    },
+    {
+      "source": "物理学",
+      "target": "力学",
+      "relation": "经典力学"
+    },
+    {
+      "source": "物理学",
+      "target": "光学工程",
+      "relation": "光学应用"
+    },
+    {
+      "source": "物理学",
+      "target": "电子科学与技术",
+      "relation": "固体物理"
+    },
+    {
+      "source": "物理学",
+      "target": "天文学",
+      "relation": "天体物理"
+    },
+    {
+      "source": "物理学",
+      "target": "地球物理学",
+      "relation": "地球物理"
+    },
+    {
+      "source": "化学",
+      "target": "化学工程与技术",
+      "relation": "化工基础"
+    },
+    {
+      "source": "化学",
+      "target": "材料科学与工程",
+      "relation": "材料化学"
+    },
+    {
+      "source": "化学",
+      "target": "环境科学与工程",
+      "relation": "环境化学"
+    },
+    {
+      "source": "化学",
+      "target": "冶金工程",
+      "relation": "冶金化学"
+    },
+    {
+      "source": "化学",
+      "target": "轻工技术与工程",
+      "relation": "轻工化学"
+    },
+    {
+      "source": "化学",
+      "target": "纺织科学与工程",
+      "relation": "纺织化学"
+    },
+    {
+      "source": "材料科学与工程",
+      "target": "机械工程",
+      "relation": "机械材料"
+    },
+    {
+      "source": "材料科学与工程",
+      "target": "冶金工程",
+      "relation": "金属材料"
+    },
+    {
+      "source": "材料科学与工程",
+      "target": "化学工程与技术",
+      "relation": "高分子材料"
+    },
+    {
+      "source": "材料科学与工程",
+      "target": "核科学与技术",
+      "relation": "核材料"
+    },
+    {
+      "source": "力学",
+      "target": "机械工程",
+      "relation": "机械力学"
+    },
+    {
+      "source": "力学",
+      "target": "土木工程",
+      "relation": "结构力学"
+    },
+    {
+      "source": "力学",
+      "target": "航空宇航科学与技术",
+      "relation": "空气动力学"
+    },
+    {
+      "source": "力学",
+      "target": "船舶与海洋工程",
+      "relation": "流体力学"
+    },
+    {
+      "source": "力学",
+      "target": "动力工程及工程热物理",
+      "relation": "热力学"
+    },
+    {
+      "source": "机械工程",
+      "target": "仪器科学与技术",
+      "relation": "精密仪器"
+    },
+    {
+      "source": "机械工程",
+      "target": "控制科学与工程",
+      "relation": "机电控制"
+    },
+    {
+      "source": "机械工程",
+      "target": "交通运输工程",
+      "relation": "车辆工程"
+    },
+    {
+      "source": "机械工程",
+      "target": "兵器科学与技术",
+      "relation": "武器制造"
+    },
+    {
+      "source": "机械工程",
+      "target": "航空宇航科学与技术",
+      "relation": "航空制造"
+    },
+    {
+      "source": "机械工程",
+      "target": "船舶与海洋工程",
+      "relation": "船舶制造"
+    },
+    {
+      "source": "电气工程",
+      "target": "控制科学与工程",
+      "relation": "电气控制"
+    },
+    {
+      "source": "电气工程",
+      "target": "电子科学与技术",
+      "relation": "电力电子"
+    },
+    {
+      "source": "电气工程",
+      "target": "动力工程及工程热物理",
+      "relation": "发电技术"
+    },
+    {
+      "source": "电子科学与技术",
+      "target": "信息与通信工程",
+      "relation": "电子通信"
+    },
+    {
+      "source": "电子科学与技术",
+      "target": "计算机科学与技术",
+      "relation": "硬件基础"
+    },
+    {
+      "source": "电子科学与技术",
+      "target": "光学工程",
+      "relation": "光电子"
+    },
+    {
+      "source": "信息与通信工程",
+      "target": "计算机科学与技术",
+      "relation": "网络通信"
+    },
+    {
+      "source": "信息与通信工程",
+      "target": "网络空间安全",
+      "relation": "通信安全"
+    },
+    {
+      "source": "计算机科学与技术",
+      "target": "软件工程",
+      "relation": "软件与硬件"
+    },
+    {
+      "source": "计算机科学与技术",
+      "target": "网络空间安全",
+      "relation": "网络安全"
+    },
+    {
+      "source": "计算机科学与技术",
+      "target": "控制科学与工程",
+      "relation": "智能控制"
+    },
+    {
+      "source": "计算机科学与技术",
+      "target": "测绘科学与技术",
+      "relation": "地理信息"
+    },
+    {
+      "source": "计算机科学与技术",
+      "target": "统计学",
+      "relation": "数据科学"
+    },
+    {
+      "source": "计算机科学与技术",
+      "target": "管理科学与工程",
+      "relation": "信息系统"
+    },
+    {
+      "source": "软件工程",
+      "target": "网络空间安全",
+      "relation": "安全软件"
+    },
+    {
+      "source": "控制科学与工程",
+      "target": "仪器科学与技术",
+      "relation": "测控技术"
+    },
+    {
+      "source": "控制科学与工程",
+      "target": "航空宇航科学与技术",
+      "relation": "飞行控制"
+    },
+    {
+      "source": "土木工程",
+      "target": "建筑学",
+      "relation": "建筑结构"
+    },
+    {
+      "source": "土木工程",
+      "target": "城乡规划学",
+      "relation": "城市规划"
+    },
+    {
+      "source": "土木工程",
+      "target": "水利工程",
+      "relation": "水工结构"
+    },
+    {
+      "source": "土木工程",
+      "target": "交通运输工程",
+      "relation": "交通土建"
+    },
+    {
+      "source": "土木工程",
+      "target": "测绘科学与技术",
+      "relation": "工程测量"
+    },
+    {
+      "source": "土木工程",
+      "target": "地质资源与地质工程",
+      "relation": "岩土工程"
+    },
+    {
+      "source": "建筑学",
+      "target": "城乡规划学",
+      "relation": "规划与设计"
+    },
+    {
+      "source": "建筑学",
+      "target": "风景园林学",
+      "relation": "景观建筑"
+    },
+    {
+      "source": "建筑学",
+      "target": "设计学",
+      "relation": "建筑设计"
+    },
+    {
+      "source": "水利工程",
+      "target": "环境科学与工程",
+      "relation": "水环境"
+    },
+    {
+      "source": "水利工程",
+      "target": "海洋科学",
+      "relation": "海洋工程"
+    },
+    {
+      "source": "测绘科学与技术",
+      "target": "地理学",
+      "relation": "地理测绘"
+    },
+    {
+      "source": "测绘科学与技术",
+      "target": "地球物理学",
+      "relation": "大地测量"
+    },
+    {
+      "source": "地质学",
+      "target": "地质资源与地质工程",
+      "relation": "地质勘探"
+    },
+    {
+      "source": "地质学",
+      "target": "地球物理学",
+      "relation": "地球内部"
+    },
+    {
+      "source": "地质资源与地质工程",
+      "target": "矿业工程",
+      "relation": "矿产开发"
+    },
+    {
+      "source": "地质资源与地质工程",
+      "target": "石油与天然气工程",
+      "relation": "油气勘探"
+    },
+    {
+      "source": "矿业工程",
+      "target": "安全科学与工程",
+      "relation": "矿山安全"
+    },
+    {
+      "source": "矿业工程",
+      "target": "冶金工程",
+      "relation": "矿物加工"
+    },
+    {
+      "source": "石油与天然气工程",
+      "target": "化学工程与技术",
+      "relation": "石油化工"
+    },
+    {
+      "source": "环境科学与工程",
+      "target": "生态学",
+      "relation": "环境生态"
+    },
+    {
+      "source": "环境科学与工程",
+      "target": "农业资源与环境",
+      "relation": "农业环境"
+    },
+    {
+      "source": "环境科学与工程",
+      "target": "安全科学与工程",
+      "relation": "环境安全"
+    },
+    {
+      "source": "大气科学",
+      "target": "海洋科学",
+      "relation": "海气交互"
+    },
+    {
+      "source": "大气科学",
+      "target": "地球物理学",
+      "relation": "大气物理"
+    },
+    {
+      "source": "海洋科学",
+      "target": "地球物理学",
+      "relation": "海洋物理"
+    },
+    {
+      "source": "地理学",
+      "target": "生态学",
+      "relation": "地理生态"
+    },
+    {
+      "source": "地理学",
+      "target": "城乡规划学",
+      "relation": "区域规划"
+    },
+    {
+      "source": "心理学",
+      "target": "教育学",
+      "relation": "教育心理"
+    },
+    {
+      "source": "心理学",
+      "target": "社会学",
+      "relation": "社会心理"
+    },
+    {
+      "source": "心理学",
+      "target": "体育学",
+      "relation": "运动心理"
+    },
+    {
+      "source": "教育学",
+      "target": "体育学",
+      "relation": "体育教育"
+    },
+    {
+      "source": "社会学",
+      "target": "民族学",
+      "relation": "民族社会"
+    },
+    {
+      "source": "社会学",
+      "target": "政治学",
+      "relation": "政治社会"
+    },
+    {
+      "source": "政治学",
+      "target": "法学",
+      "relation": "政治与法律"
+    },
+    {
+      "source": "政治学",
+      "target": "公共管理",
+      "relation": "公共政策"
+    },
+    {
+      "source": "法学",
+      "target": "公共管理",
+      "relation": "法治管理"
+    },
+    {
+      "source": "应用经济学",
+      "target": "理论经济学",
+      "relation": "经济理论"
+    },
+    {
+      "source": "应用经济学",
+      "target": "工商管理",
+      "relation": "企业经济"
+    },
+    {
+      "source": "应用经济学",
+      "target": "农林经济管理",
+      "relation": "农业经济"
+    },
+    {
+      "source": "应用经济学",
+      "target": "统计学",
+      "relation": "经济统计"
+    },
+    {
+      "source": "工商管理",
+      "target": "管理科学与工程",
+      "relation": "管理方法"
+    },
+    {
+      "source": "公共管理",
+      "target": "管理科学与工程",
+      "relation": "公共管理"
+    },
+    {
+      "source": "图书情报与档案管理",
+      "target": "计算机科学与技术",
+      "relation": "信息管理"
+    },
+    {
+      "source": "新闻传播学",
+      "target": "社会学",
+      "relation": "传播社会"
+    },
+    {
+      "source": "新闻传播学",
+      "target": "计算机科学与技术",
+      "relation": "数字媒体"
+    },
+    {
+      "source": "戏剧与影视学",
+      "target": "艺术学理论",
+      "relation": "艺术理论"
+    },
+    {
+      "source": "戏剧与影视学",
+      "target": "设计学",
+      "relation": "舞台设计"
+    },
+    {
+      "source": "音乐与舞蹈学",
+      "target": "艺术学理论",
+      "relation": "艺术理论"
+    },
+    {
+      "source": "设计学",
+      "target": "艺术学理论",
+      "relation": "设计理论"
+    },
+    {
+      "source": "设计学",
+      "target": "建筑学",
+      "relation": "建筑设计"
+    },
+    {
+      "source": "设计学",
+      "target": "风景园林学",
+      "relation": "景观设计"
+    },
+    {
+      "source": "考古学",
+      "target": "世界史",
+      "relation": "历史考古"
+    },
+    {
+      "source": "考古学",
+      "target": "科学技术史",
+      "relation": "科技考古"
+    },
+    {
+      "source": "科学技术史",
+      "target": "哲学",
+      "relation": "科技哲学"
+    },
+    {
+      "source": "哲学",
+      "target": "世界史",
+      "relation": "历史哲学"
+    },
+    {
+      "source": "哲学",
+      "target": "政治学",
+      "relation": "政治哲学"
+    },
+    {
+      "source": "哲学",
+      "target": "法学",
+      "relation": "法哲学"
+    },
+    {
+      "source": "系统科学",
+      "target": "控制科学与工程",
+      "relation": "系统控制"
+    },
+    {
+      "source": "系统科学",
+      "target": "管理科学与工程",
+      "relation": "系统管理"
+    },
+    {
+      "source": "核科学与技术",
+      "target": "物理学",
+      "relation": "核物理"
+    },
+    {
+      "source": "核科学与技术",
+      "target": "动力工程及工程热物理",
+      "relation": "核能动力"
+    },
+    {
+      "source": "核科学与技术",
+      "target": "安全科学与工程",
+      "relation": "核安全"
+    },
+    {
+      "source": "动力工程及工程热物理",
+      "target": "航空宇航科学与技术",
+      "relation": "航空动力"
+    },
+    {
+      "source": "动力工程及工程热物理",
+      "target": "船舶与海洋工程",
+      "relation": "船舶动力"
+    },
+    {
+      "source": "交通运输工程",
+      "target": "土木工程",
+      "relation": "交通工程"
+    },
+    {
+      "source": "交通运输工程",
+      "target": "控制科学与工程",
+      "relation": "交通控制"
+    },
+    {
+      "source": "交通运输工程",
+      "target": "管理科学与工程",
+      "relation": "交通管理"
+    },
+    {
+      "source": "航空宇航科学与技术",
+      "target": "控制科学与工程",
+      "relation": "飞行控制"
+    },
+    {
+      "source": "航空宇航科学与技术",
+      "target": "信息与通信工程",
+      "relation": "航空通信"
+    },
+    {
+      "source": "船舶与海洋工程",
+      "target": "海洋科学",
+      "relation": "海洋工程"
+    },
+    {
+      "source": "船舶与海洋工程",
+      "target": "力学",
+      "relation": "船舶力学"
+    },
+    {
+      "source": "兵器科学与技术",
+      "target": "控制科学与工程",
+      "relation": "武器控制"
+    },
+    {
+      "source": "兵器科学与技术",
+      "target": "力学",
+      "relation": "弹道力学"
+    },
+    {
+      "source": "纺织科学与工程",
+      "target": "材料科学与工程",
+      "relation": "纺织材料"
+    },
+    {
+      "source": "纺织科学与工程",
+      "target": "设计学",
+      "relation": "服装设计"
+    },
+    {
+      "source": "轻工技术与工程",
+      "target": "食品科学与工程",
+      "relation": "食品加工"
+    },
+    {
+      "source": "轻工技术与工程",
+      "target": "化学工程与技术",
+      "relation": "轻工化工"
+    },
+    {
+      "source": "安全科学与工程",
+      "target": "土木工程",
+      "relation": "结构安全"
+    },
+    {
+      "source": "安全科学与工程",
+      "target": "化学工程与技术",
+      "relation": "化工安全"
+    },
+    {
+      "source": "光学工程",
+      "target": "仪器科学与技术",
+      "relation": "光学仪器"
+    },
+    {
+      "source": "光学工程",
+      "target": "电子科学与技术",
+      "relation": "光电子"
+    },
+    {
+      "source": "仪器科学与技术",
+      "target": "控制科学与工程",
+      "relation": "测控技术"
+    },
+    {
+      "source": "仪器科学与技术",
+      "target": "机械工程",
+      "relation": "精密仪器"
+    }
+  ]
+}

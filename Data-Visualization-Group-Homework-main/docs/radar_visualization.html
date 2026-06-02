@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学科门类雷达图</title>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<link rel="stylesheet" href="common.css">
+<style>
+body{display:flex;justify-content:center;align-items:center;min-height:100vh}
+.main{background:#fff;border:1px solid #e0e0e0;border-radius:16px;padding:28px 24px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.08);max-width:960px;width:95%}
+h3{font-size:18px;font-weight:600;color:var(--c-primary);margin-bottom:4px}
+.subtitle{font-size:11px;color:#bbb;margin-bottom:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.country-chip{padding:7px 18px;border:2px solid #ccc;border-radius:20px;background:#fafafa;color:#999;cursor:pointer;font-size:13px;transition:all 0.2s;font-family:inherit}
+.country-chip:hover{border-color:var(--c-primary);color:var(--c-primary)}
+.country-chip.selected{background:#e8eaf6;color:var(--c-primary);border-color:var(--c-primary);font-weight:600}
+.country-chip.disabled{opacity:0.4;cursor:not-allowed}
+.chart-wrap{position:relative;width:100%;height:600px;display:flex;justify-content:center}
+.chart{width:100%;height:600px}
+.legend{display:flex;flex-wrap:wrap;gap:18px;margin-top:10px;padding:10px 14px;background:#fafafa;border-radius:10px;justify-content:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#555}
+.legend-dot{width:12px;height:12px;border-radius:50%;display:inline-block;border:2px solid rgba(255,255,255,0.8);box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.tooltip{position:absolute;background:rgba(30,30,50,0.95);color:#fff;padding:12px 18px;border-radius:12px;font-size:12px;pointer-events:none;opacity:0;border:1px solid rgba(255,255,255,0.1);z-index:200;line-height:1.7;backdrop-filter:blur(8px);min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,0.25)}
+.tooltip b{color:#fff;font-size:14px}
+.tooltip .tt-row{display:flex;justify-content:space-between;gap:16px}
+.tooltip .tt-val{font-weight:600}
+</style>
+</head>
+<body>
+<div style="background:linear-gradient(135deg, #f5f7fa, #e8ecf1); padding: 16px 30px; margin: 0 0 16px; border-bottom:1px solid #dae3f3;">
+  <div style="max-width:960px; margin:0 auto;">
+    <h2 style="font-size:13px; font-weight:700; color:#1a237e; margin-bottom:8px;">📚 页面说明</h2>
+    <p style="font-size:11px; color:#666; line-height:1.6; margin:0;">
+      本雷达图以学科门类(12 大类：哲学、理学、工学、医学等)为轴，展示中国与各中东欧国家的学科合作特征。
+      每个国家的轮廓反映其在各学科门类中的相对优势。注意：各轴独立归一为 100%，便于对比国别特色。
+    </p>
+  </div>
+</div>
+
+<div class="main">
+<h3>🕸️ 学科门类雷达图 — 多国对比</h3>
+<div class="subtitle">每轴独立归一 = 100%，展示各国相对学科优势</div>
+<div class="controls" id="controls"></div>
+<div class="chart" id="chart"></div>
+<div class="legend" id="legend"></div>
+</div>
+<div class="tooltip" id="tooltip"></div>
+<script>
+const DATA = [{"name": "波兰", "categories": {"哲学": 0.2, "经济学": 0.2, "法学": 0.9, "教育学": 1.7, "文学": 0.2, "历史学": 0.3, "理学": 47.3, "工学": 33.5, "农学": 1.3, "医学": 11.8, "管理学": 2.5, "艺术学": 0.1}, "total": 13387}, {"name": "捷克", "categories": {"哲学": 0.1, "经济学": 0.3, "法学": 0.8, "教育学": 1.4, "文学": 0.1, "历史学": 0.3, "理学": 48.9, "工学": 33.3, "农学": 2.9, "医学": 9.7, "管理学": 2.0, "艺术学": 0.1}, "total": 10043}, {"name": "希腊", "categories": {"哲学": 0.2, "经济学": 0.2, "法学": 0.9, "教育学": 1.4, "文学": 0.2, "历史学": 0.3, "理学": 46.5, "工学": 33.8, "农学": 0.8, "医学": 13.2, "管理学": 2.3, "艺术学": 0.2}, "total": 7960}, {"name": "罗马尼亚", "categories": {"哲学": 0.1, "经济学": 0.7, "法学": 0.7, "教育学": 2.5, "文学": 0.1, "历史学": 0.3, "理学": 45.5, "工学": 34.4, "农学": 0.9, "医学": 12.6, "管理学": 2.3, "艺术学": 0.1}, "total": 6818}, {"name": "匈牙利", "categories": {"哲学": 0.1, "经济学": 0.1, "法学": 0.6, "教育学": 1.5, "文学": 0.1, "历史学": 0.1, "理学": 57.7, "工学": 26.0, "农学": 1.1, "医学": 11.2, "管理学": 1.4, "艺术学": 0.0}, "total": 6526}, {"name": "斯洛文尼亚", "categories": {"哲学": 0.2, "经济学": 0.1, "法学": 0.7, "教育学": 1.4, "文学": 0.2, "历史学": 0.2, "理学": 57.1, "工学": 27.6, "农学": 0.8, "医学": 9.6, "管理学": 1.9, "艺术学": 0.2}, "total": 3269}, {"name": "塞尔维亚", "categories": {"哲学": 0.1, "经济学": 0.1, "法学": 0.7, "教育学": 1.2, "文学": 0.1, "历史学": 0.1, "理学": 62.9, "工学": 20.1, "农学": 1.0, "医学": 11.6, "管理学": 1.9, "艺术学": 0.1}, "total": 3125}, {"name": "斯洛伐克", "categories": {"哲学": 0.1, "经济学": 0.3, "法学": 0.5, "教育学": 1.4, "文学": 0.1, "历史学": 0.0, "理学": 59.0, "工学": 28.7, "农学": 0.4, "医学": 8.2, "管理学": 1.3, "艺术学": 0.1}, "total": 2973}, {"name": "保加利亚", "categories": {"哲学": 0.2, "经济学": 0.0, "法学": 0.7, "教育学": 1.9, "文学": 0.0, "历史学": 0.1, "理学": 58.1, "工学": 26.1, "农学": 1.1, "医学": 10.2, "管理学": 1.6, "艺术学": 0.1}, "total": 2916}, {"name": "克罗地亚", "categories": {"哲学": 0.0, "经济学": 0.3, "法学": 0.5, "教育学": 1.9, "文学": 0.0, "历史学": 0.1, "理学": 58.5, "工学": 23.1, "农学": 1.3, "医学": 13.4, "管理学": 0.9, "艺术学": 0.0}, "total": 2805}, {"name": "爱沙尼亚", "categories": {"哲学": 0.5, "经济学": 0.4, "法学": 0.7, "教育学": 1.9, "文学": 0.0, "历史学": 0.1, "理学": 57.6, "工学": 24.5, "农学": 1.9, "医学": 11.2, "管理学": 1.1, "艺术学": 0.1}, "total": 2311}, {"name": "拉脱维亚", "categories": {"哲学": 0.0, "经济学": 0.0, "法学": 0.1, "教育学": 0.8, "文学": 0.0, "历史学": 0.0, "理学": 69.2, "工学": 20.8, "农学": 0.3, "医学": 8.6, "管理学": 0.3, "艺术学": 0.0}, "total": 1413}];
+const CATS = ["哲学", "经济学", "法学", "教育学", "文学", "历史学", "理学", "工学", "农学", "医学", "管理学", "艺术学"];
+const COLORS = ["#4fc3f7","#7c4dff","#ff6e40","#69f0ae","#ffd740"];
+
+let selected = [DATA[0]?.name, DATA[1]?.name, DATA[2]?.name].filter(Boolean);
+
+function renderControls(){
+  const c = d3.select("#controls");
+  c.selectAll("*").remove();
+  c.selectAll(".country-chip").data(DATA).join("div")
+    .attr("class",d=>"country-chip"+(selected.includes(d.name)?" selected":"")+((!selected.includes(d.name)&&selected.length>=5)?" disabled":""))
+    .text(d=>d.name+" ("+d.total+" 篇)")
+    .on("click",(e,d)=>{
+      if(selected.includes(d.name)){selected=selected.filter(s=>s!==d.name);renderControls();drawRadar()}
+      else if(selected.length<5){selected.push(d.name);renderControls();drawRadar()}
+    });
+}
+
+function drawRadar(){
+  const c=d3.select("#chart"); c.selectAll("*").remove();
+  const l=d3.select("#legend"); l.selectAll("*").remove();
+  const w=Math.max(c.node().clientWidth,400), h=600, R=Math.min(w,h)/2-90;
+  const cx=w/2, cy=h/2-10;
+  const svg=c.append("svg").attr("width",w).attr("height",h).append("g").attr("transform","translate("+cx+","+cy+")");
+
+  const N=CATS.length;
+  const angleSlice=Math.PI*2/N;
+
+  // Grid: concentric polygons (spider web)
+  [20,40,60,80,100].forEach((pct,i)=>{
+    const pts=[];
+    for(let j=0;j<N;j++){
+      const a=angleSlice*j-Math.PI/2;
+      pts.push([R*pct/100*Math.cos(a), R*pct/100*Math.sin(a)]);
+    }
+    svg.append("polygon").attr("points",pts.map(p=>p.join(",")).join(" "))
+      .attr("fill","none").attr("stroke","#e8e8e8").attr("stroke-width",i===4?1.2:0.8)
+      .attr("stroke-dasharray",i%2===0?"4,3":"none");
+    svg.append("text").attr("x",4).attr("y",-R*pct/100).attr("dy","0.35em")
+      .style("fill","#ddd").style("font-size","9px").text(pct+"%");
+  });
+
+  // Axes
+  svg.selectAll(".axis").data(CATS).join("line")
+    .attr("x1",0).attr("y1",0)
+    .attr("x2",(d,i)=>R*Math.cos(angleSlice*i-Math.PI/2))
+    .attr("y2",(d,i)=>R*Math.sin(angleSlice*i-Math.PI/2))
+    .attr("stroke","#d0d0d0").attr("stroke-width",1);
+
+  // Axis labels
+  svg.selectAll(".label").data(CATS).join("text")
+    .attr("x",(d,i)=>(R+20)*Math.cos(angleSlice*i-Math.PI/2))
+    .attr("y",(d,i)=>(R+20)*Math.sin(angleSlice*i-Math.PI/2))
+    .attr("text-anchor",(d,i)=>{const a=angleSlice*i;return Math.abs(Math.cos(a))<0.1?"middle":Math.cos(a)>0?"start":"end"})
+    .attr("dy","0.35em").style("fill","#667").style("font-size","12px").style("font-weight","500").text(d=>d);
+
+  // Per-category normalization
+  const selectedData = selected.map(name=>DATA.find(d=>d.name===name)).filter(Boolean);
+  if(selectedData.length===0){c.append("div").style("text-align","center").style("padding","120px 0").style("color","#bbb").text("请选择至少一个国家");return}
+  const maxPerCat={};
+  CATS.forEach(cat=>{maxPerCat[cat]=d3.max(selectedData,d=>d.categories[cat]||0)||1});
+  const normVal=(country,cat)=>((country.categories[cat]||0)/maxPerCat[cat])*100;
+  const radarLine=d3.lineRadial().curve(d3.curveLinearClosed).radius(d=>R*d.nval/100).angle((d,i)=>i*angleSlice);
+
+  // Draw each country
+  selectedData.forEach((country,si)=>{
+    const pts=CATS.map((cat,i)=>({nval:normVal(country,cat),cat,orig:country.categories[cat]||0,index:i}));
+    const col=COLORS[si%COLORS.length];
+
+    const path=svg.append("path").datum(pts)
+      .attr("d",radarLine).attr("fill",col).attr("fill-opacity",0.1)
+      .attr("stroke",col).attr("stroke-width",2.5).attr("stroke-opacity",0.85)
+      .attr("stroke-linejoin","round");
+
+    // Animate stroke draw-in
+    const plen=path.node().getTotalLength();
+    path.attr("stroke-dasharray",plen+" "+plen).attr("stroke-dashoffset",plen)
+      .transition().duration(800).delay(si*200).attr("stroke-dashoffset",0)
+      .transition().duration(200).attr("fill-opacity",0.13);
+
+    // Data dots (animated in)
+    svg.selectAll(".dot"+si).data(pts).join("circle")
+      .attr("cx",d=>R*d.nval/100*Math.cos(angleSlice*d.index-Math.PI/2))
+      .attr("cy",d=>R*d.nval/100*Math.sin(angleSlice*d.index-Math.PI/2))
+      .attr("r",0).attr("fill",col).attr("stroke","#fff").attr("stroke-width",2.5)
+      .transition().delay(600+si*200).duration(300).attr("r",5);
+
+    // Hover tooltips (after all animations)
+    setTimeout(()=>{
+      svg.selectAll(".dot"+si).data(pts).join("circle")
+        .attr("cx",d=>R*d.nval/100*Math.cos(angleSlice*d.index-Math.PI/2))
+        .attr("cy",d=>R*d.nval/100*Math.sin(angleSlice*d.index-Math.PI/2))
+        .attr("r",5).attr("fill",col).attr("stroke","#fff").attr("stroke-width",2.5).style("cursor","pointer")
+        .on("mouseenter",function(e,d){
+          d3.select(this).transition().duration(150).attr("r",9).attr("stroke-width",3);
+          let bestCountry="",bestVal=0;
+          selectedData.forEach(sc=>{const v=sc.categories[d.cat]||0;if(v>bestVal){bestVal=v;bestCountry=sc.name}});
+          const isBest=country.name===bestCountry;
+          showTooltip(e,
+            '<b style="color:'+col+'">'+country.name+'</b> &mdash; <b>'+d.cat+'</b>'+
+            '<div class="tt-row"><span>'+country.name+'</span><span class="tt-val">'+d.orig+'%</span></div>'+
+            (isBest?'<div class="tt-row" style="color:#69f0ae"><span>🥇 该门类最高</span><span class="tt-val">'+d.orig+'%</span></div>':
+              '<div class="tt-row"><span>'+bestCountry+' (最高)</span><span class="tt-val">'+bestVal+'%</span></div>')
+          );
+        })
+        .on("mousemove",function(e){d3.select("#tooltip").style("left",(e.pageX+16)+"px").style("top",(e.pageY-10)+"px")})
+        .on("mouseleave",function(){d3.select(this).transition().duration(150).attr("r",5).attr("stroke-width",2.5);hideTooltip()});
+    },1000+si*200);
+  });
+
+  // Legend
+  selectedData.forEach((country,i)=>{
+    const col=COLORS[i%COLORS.length];
+    l.append("div").attr("class","legend-item")
+      .html('<span class="legend-dot" style="background:'+col+'"></span> '+country.name+' <span style="color:#bbb;font-size:11px">('+country.total+' 篇)</span>');
+  });
+}
+
+function showTooltip(e,html){d3.select("#tooltip").html(html).style("opacity",1).style("left",(e.pageX+16)+"px").style("top",(e.pageY-10)+"px")}
+function hideTooltip(){d3.select("#tooltip").style("opacity",0)}
+
+renderControls();
+drawRadar();
+window.addEventListener("resize",drawRadar);
+</script>
+
+<div style="background:#f0f5f9; padding: 24px; margin: 20px auto; border-radius:12px; max-width:960px; border-left:4px solid #1a237e;">
+  <h3 style="font-size:14px; font-weight:700; color:#1a237e; margin-bottom:12px;">🔍 学科门类对比洞察</h3>
+  <p style="font-size:11px; color:#666; line-height:1.7; margin:0 0 12px;">
+    <strong>总体特征：</strong>中国与中东欧所有国家都呈现<strong>理学和工学优势、人文社科薄弱</strong>的同构特征。
+    理学(含物理、化学、数学)和工学占合作论文总数的 80% 以上，是合作的绝对主力，而哲学、经济学、法学等人文学科普遍低于 2%。
+  </p>
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; font-size:10px; margin-bottom:12px;">
+    <div style="padding:10px; background:#fff; border-radius:6px; border-left:2px solid #4fc3f7;">
+      <strong style="color:#4fc3f7;">🥇 理学优势</strong><br/>
+      <span style="color:#666; line-height:1.5;">物理学占比最高(45-60%)，尤以波兰、匈牙利最突出。说明两地在物理学领域有天然的合作基础。</span>
+    </div>
+    <div style="padding:10px; background:#fff; border-radius:6px; border-left:2px solid #7c4dff;">
+      <strong style="color:#7c4dff;">🥈 工学多元</strong><br/>
+      <span style="color:#666; line-height:1.5;">工学占比(20-35%)相对稳定，机械、材料、信息工程等分支都有涉及。各国在工学中的优势分化明显。</span>
+    </div>
+    <div style="padding:10px; background:#fff; border-radius:6px; border-left:2px solid #00e5ff;">
+      <strong style="color:#00e5ff;">🥉 医学突破</strong><br/>
+      <span style="color:#666; line-height:1.5;">医学占比(8-14%)成为"第三极"，希腊、克罗地亚医学合作权重较高，体现学科多样化趋势。</span>
+    </div>
+  </div>
+  <p style="font-size:11px; color:#666; line-height:1.7; margin:0;">
+    <strong>国别差异：</strong>虽整体上同构，但各国在学科权重上有微妙差异。波兰物理学占比超 47%，而希腊医学权重达 13%。
+    这些差异既反映了各国的学科优势，也为今后的合作提供了明确的方向指引——既可加强已有的强势学科深度合作，
+    也可探索新兴学科(如医学、环境科学)的拓展空间。
+  </p>
+</div>
+
+<div style="background:#fff; border-top:1px solid #e8e8e8; padding: 24px; max-width:960px; margin:20px auto;">
+  <h3 style="font-size:14px; font-weight:700; color:#1a237e; margin-bottom:12px;">💡 结论与展望</h3>
+  <p style="font-size:11px; color:#666; line-height:1.7; margin:0;">
+    <strong>现状：</strong>中国与中东欧学术合作形成了以"理工医"为支柱、理学为主导的学科体系。
+    这种"倒金字塔"的学科结构既符合国际学术交流规律，也体现了双方优先聚焦于高精尖研究的战略选择。
+    <br/><strong>前景：</strong>随着合作深化，人文社科领域的合作应该成为下一阶段的重点拓展方向，
+    以实现"全学科、多层次、深融合"的学术交流新格局。
+  </p>
+</div>
+
+</body>
+</html>
